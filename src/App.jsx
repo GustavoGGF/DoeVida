@@ -35,26 +35,9 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [typemessage, setTypemessage] = useState("");
   const [idade, setIdade] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    while (!doador) {
-      window.addEventListener("load", function () {
-        const loader = document.getElementById("loading");
-        setTimeout(async function () {
-          loader.style.opacity = "0";
-          setTimeout(function () {
-            loader.style.display = "none";
-          }, 1000);
-          setLoading(false);
-          Buttons();
-        }, 8000);
-      });
-    }
-
-    while (doador) {
-      setLoading(false);
-    }
+    Buttons();
   }, []);
   function validarData(dia, mes, ano) {
     const data = new Date(ano, mes - 1, dia);
@@ -850,11 +833,6 @@ const App = () => {
       </Div1>
       <Footer>
         <Div2>
-          {loading && (
-            <div id="loading">
-              <div className="spinner"></div>
-            </div>
-          )}
           {doador && (
             <div id="div3">
               <span>Você se lembra da ultima vez que doou sangue?</span>
