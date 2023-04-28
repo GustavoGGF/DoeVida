@@ -16,7 +16,7 @@ import Menssagem from "./components/Menssagem";
 import Style from "../src/App.css?";
 
 const App = () => {
-  const [doador, setDoardor] = useState(false);
+  const [doador, setDoardor] = useState(true);
   const [calendario, setcalendario] = useState(false);
   const [data, setdata] = useState(false);
   const [message, setMessage] = useState(false);
@@ -38,18 +38,19 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.addEventListener("load", function () {
-      const loader = document.getElementById("loading");
-      setTimeout(async function () {
-        loader.style.opacity = "0";
-        setTimeout(function () {
-          loader.style.display = "none";
-        }, 1000);
-        setLoading(false);
-        setDoardor(true);
-        Buttons();
-      }, 8000);
-    });
+    while (!doador) {
+      window.addEventListener("load", function () {
+        const loader = document.getElementById("loading");
+        setTimeout(async function () {
+          loader.style.opacity = "0";
+          setTimeout(function () {
+            loader.style.display = "none";
+          }, 1000);
+          setLoading(false);
+          Buttons();
+        }, 8000);
+      });
+    }
   }, []);
   function validarData(dia, mes, ano) {
     const data = new Date(ano, mes - 1, dia);
