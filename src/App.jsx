@@ -51,6 +51,10 @@ const App = () => {
         }, 8000);
       });
     }
+
+    while (doador) {
+      setLoading(false);
+    }
   }, []);
   function validarData(dia, mes, ano) {
     const data = new Date(ano, mes - 1, dia);
