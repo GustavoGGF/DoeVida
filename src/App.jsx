@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BloodDrop from "./components/Blood";
 import {
   DivP,
@@ -16,14 +16,14 @@ import Menssagem from "./components/Menssagem";
 import Style from "../src/App.css?";
 
 const App = () => {
-  const [doador, setDoardor] = useState(true);
+  const [explicando, setExplicando] = useState(true);
+  const [doador, setDoardor] = useState(false);
   const [calendario, setcalendario] = useState(false);
   const [data, setdata] = useState(false);
   const [message, setMessage] = useState(false);
   const [quetionario, setquestionario] = useState(false);
   const [genero, setgenero] = useState(false);
   const [dataFinal, setDataFinal] = useState("");
-  const [descanso, setDescanso] = useState(null);
   const [prioridade, setPrioridade] = useState(false);
   const [validacao1, setvalidacao1] = useState(false);
   const [validacao2, setvalidacao2] = useState(false);
@@ -36,9 +36,6 @@ const App = () => {
   const [typemessage, setTypemessage] = useState("");
   const [idade, setIdade] = useState(null);
 
-  useEffect(() => {
-    Buttons();
-  }, []);
   function validarData(dia, mes, ano) {
     const data = new Date(ano, mes - 1, dia);
     return (
@@ -49,6 +46,9 @@ const App = () => {
   }
 
   function Buttons() {
+    setExplicando(false);
+    setDoardor(true);
+
     setTimeout(() => {
       const btn1 = document.getElementById("btn1");
       const btn2 = document.getElementById("btn2");
@@ -116,12 +116,11 @@ const App = () => {
         generoEscolhido = check.value;
 
         if (generoEscolhido == "feminino") {
-          soma = 60;
-        } else {
           soma = 90;
+        } else {
+          soma = 60;
         }
       }
-      setDescanso(soma);
       return soma;
     });
 
@@ -134,6 +133,8 @@ const App = () => {
     const dataSoma = new Date(dataFinal);
 
     dataSoma.setDate(dataSoma.getDate() + soma);
+
+    console.log(dataSoma);
 
     setDataFinal(dataSoma.toISOString().slice(0, 10));
     setPrioridade(true);
@@ -156,6 +157,7 @@ const App = () => {
             setvalidacao1(false);
             setMessage(false);
             input.style.display = "block";
+            console.log(dataFinal);
           }
         }
       });
@@ -833,6 +835,23 @@ const App = () => {
       </Div1>
       <Footer>
         <Div2>
+          {explicando && (
+            <div className="non d-flex flex-column">
+              <span>
+                Esse é um projeto de um grupo de alunos da UniFtec no qual visa
+                ajudar as pessoas que tem dúvidas se podem ou não doar sangue.
+                <br />
+                Você passará por alguns questionarios e se atender todos os
+                requisitos até o final, será mostrada a data no qual a partir
+                dela você poderá doar.
+              </span>
+              <div className="text-center">
+                <button className="mt-5 btn btn-info" onClick={Buttons}>
+                  Prosseguir
+                </button>
+              </div>
+            </div>
+          )}
           {doador && (
             <div id="div3">
               <span>Você se lembra da ultima vez que doou sangue?</span>
