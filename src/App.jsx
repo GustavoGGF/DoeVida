@@ -13,7 +13,6 @@ import {
 } from "./assets/styles/AppCSS";
 import Calendary from "./components/Calendar";
 import Menssagem from "./components/Menssagem";
-import Style from "../src/App.css?";
 
 const App = () => {
   const [explicando, setExplicando] = useState(true);
@@ -33,8 +32,9 @@ const App = () => {
   const [validacao6, setvalidacao6] = useState(false);
   const [validacao7, setvalidacao7] = useState(false);
   const [title, setTitle] = useState("");
-  const [typemessage, setTypemessage] = useState("");
+  const [TextMessage, setTextMessage] = useState([]);
   const [idade, setIdade] = useState(null);
+  const [state, setState] = useState(false);
 
   function validarData(dia, mes, ano) {
     const data = new Date(ano, mes - 1, dia);
@@ -47,21 +47,7 @@ const App = () => {
 
   function Buttons() {
     setExplicando(false);
-    setDoardor(true);
-
-    setTimeout(() => {
-      const btn1 = document.getElementById("btn1");
-      const btn2 = document.getElementById("btn2");
-
-      btn1.addEventListener("click", () => {
-        setDoardor(false);
-        setdata(true);
-      });
-      btn2.addEventListener("click", () => {
-        setDoardor(false);
-        setgenero(true);
-      });
-    }, 500);
+    setState(true);
   }
 
   async function pegarData() {
@@ -134,8 +120,6 @@ const App = () => {
 
     dataSoma.setDate(dataSoma.getDate() + soma);
 
-    console.log(dataSoma);
-
     setDataFinal(dataSoma.toISOString().slice(0, 10));
     setPrioridade(true);
     setgenero(false);
@@ -143,7 +127,6 @@ const App = () => {
   }
   function impedido1() {
     const option = document.querySelectorAll("input[name='maiorIdade']");
-    const input = document.getElementById("input1");
 
     option.forEach((radio) => {
       radio.addEventListener("change", (event) => {
@@ -152,12 +135,9 @@ const App = () => {
 
           if (selectedValue == "NAO") {
             setvalidacao1(true);
-            input.style.display = "none";
           } else {
             setvalidacao1(false);
             setMessage(false);
-            input.style.display = "block";
-            console.log(dataFinal);
           }
         }
       });
@@ -165,7 +145,6 @@ const App = () => {
   }
   function impedido2() {
     const option = document.querySelectorAll("input[name='diabete']");
-    const input = document.getElementById("input1");
 
     option.forEach((radio) => {
       radio.addEventListener("change", (event) => {
@@ -174,11 +153,9 @@ const App = () => {
 
           if (selectedValue == "SIM") {
             setvalidacao2(true);
-            input.style.display = "none";
           } else {
             setvalidacao2(false);
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -191,13 +168,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage("Diabeticos dependentes de insulina não podem doar");
-            setMessage(true);
-            input.style.display = "none";
+            setTextMessage([
+              ...TextMessage,
+              "Diabeticos dependentes de insulina não podem doar",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -208,7 +185,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -221,15 +197,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "As pessoas com epilepsia geralmente não são elegíveis para doar sangue porque a condição pode estar relacionada a um risco aumentado de convulsões, que podem ser desencadeadas pelo processo de doação de sangue. Além disso, muitos medicamentos usados para tratar a epilepsia podem afetar a coagulação sanguínea e aumentar o risco de sangramento durante a doação."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "As pessoas com epilepsia geralmente não são elegíveis para doar sangue porque a condição pode estar relacionada a um risco aumentado de convulsões, que podem ser desencadeadas pelo processo de doação de sangue. Além disso, muitos medicamentos usados para tratar a epilepsia podem afetar a coagulação sanguínea e aumentar o risco de sangramento durante a doação.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -240,7 +214,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -253,15 +226,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "Embora a Hanseníase seja tratável e curável, as pessoas que tiveram a doença podem ter resíduos da bactéria em seu sangue, o que representa um risco para o receptor do sangue."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "Embora a Hanseníase seja tratável e curável, as pessoas que tiveram a doença podem ter resíduos da bactéria em seu sangue, o que representa um risco para o receptor do sangue.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -272,7 +243,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -285,15 +255,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "Quem possui algum tipo de doença renal crônica é ilegivel de doação de sangue por conta dos seguinte riscos: Risco aumentado de anemia: A anemia é uma condição médica em que o corpo não produz glóbulos vermelhos suficientes. Pessoas com doença renal crônica têm um risco aumentado de desenvolver anemia, o que pode afetar a qualidade do sangue doado. Uso de medicamentos: Pessoas com doença renal crônica geralmente precisam tomar vários medicamentos para gerenciar sua condição. Alguns desses medicamentos podem afetar a coagulação sanguínea e aumentar o risco de sangramento durante a doação de sangue. Risco de infecções: Pessoas com doença renal crônica têm um risco aumentado de infecções, o que pode afetar a qualidade do sangue doado e representar um risco para o receptor."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "Quem possui algum tipo de doença renal crônica é ilegivel de doação de sangue por conta dos seguinte riscos: Risco aumentado de anemia: A anemia é uma condição médica em que o corpo não produz glóbulos vermelhos suficientes. Pessoas com doença renal crônica têm um risco aumentado de desenvolver anemia, o que pode afetar a qualidade do sangue doado. Uso de medicamentos: Pessoas com doença renal crônica geralmente precisam tomar vários medicamentos para gerenciar sua condição. Alguns desses medicamentos podem afetar a coagulação sanguínea e aumentar o risco de sangramento durante a doação de sangue. Risco de infecções: Pessoas com doença renal crônica têm um risco aumentado de infecções, o que pode afetar a qualidade do sangue doado e representar um risco para o receptor.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -304,7 +272,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -317,15 +284,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "Isso ocorre porque o câncer é uma condição médica que pode afetar a qualidade do sangue doado e apresentar riscos para o receptor do sangue."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "Isso ocorre porque o câncer é uma condição médica que pode afetar a qualidade do sangue doado e apresentar riscos para o receptor do sangue.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -336,7 +301,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -349,15 +313,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "O AVC é uma condição em que o suprimento de sangue para uma parte do cérebro é interrompido ou reduzido, o que pode causar danos permanentes ao tecido cerebral. Pessoas com antecedentes de AVC podem ter problemas de coagulação sanguínea e outros problemas de saúde que afetam a qualidade do sangue doado.Além disso, os tratamentos para o AVC, como medicamentos anticoagulantes e antitrombóticos, podem afetar a qualidade do sangue doado e representar um risco para o receptor."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "O AVC é uma condição em que o suprimento de sangue para uma parte do cérebro é interrompido ou reduzido, o que pode causar danos permanentes ao tecido cerebral. Pessoas com antecedentes de AVC podem ter problemas de coagulação sanguínea e outros problemas de saúde que afetam a qualidade do sangue doado.Além disso, os tratamentos para o AVC, como medicamentos anticoagulantes e antitrombóticos, podem afetar a qualidade do sangue doado e representar um risco para o receptor.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -368,7 +330,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -381,14 +342,11 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setvalidacao3(true);
-            input.style.display = "none";
           } else {
             setvalidacao3(false);
-            input.style.display = "block";
           }
         }
       });
@@ -401,14 +359,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "NAO") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "Pessoas com hepatite B e C geralmente não são elegíveis para doação de sangue. Isso ocorre porque a hepatite B e C são doenças infecciosas causadas por vírus que podem ser transmitidos pelo sangue. A transmissão do vírus da hepatite B e C pode ocorrer durante a doação de sangue, colocando o receptor em risco de contrair a doença. Além disso, a hepatite B e C podem afetar a qualidade do sangue doado, tornando-o inapropriado para uso em transfusões sanguíneas."
-            );
-            input.style.display = "none";
+            setTextMessage([
+              ...TextMessage,
+              "Pessoas com hepatite B e C geralmente não são elegíveis para doação de sangue. Isso ocorre porque a hepatite B e C são doenças infecciosas causadas por vírus que podem ser transmitidos pelo sangue. A transmissão do vírus da hepatite B e C pode ocorrer durante a doação de sangue, colocando o receptor em risco de contrair a doença. Além disso, a hepatite B e C podem afetar a qualidade do sangue doado, tornando-o inapropriado para uso em transfusões sanguíneas.",
+            ]);
             setMessage(true);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
@@ -420,7 +377,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -433,15 +389,13 @@ const App = () => {
       radio.addEventListener("change", (event) => {
         if (event.target.checked) {
           const selectedValue = event.target.value;
-          const input = document.getElementById("input1");
 
           if (selectedValue == "SIM") {
             setTitle("Impedimento Definitivo");
-            setTypemessage(
-              "Pessoas com DSTs (Doenças Sexualmente Transmissíveis) são consideradas de risco para a transmissão dessas doenças por meio da doação de sangue. Por esse motivo, em muitos países, incluindo o Brasil, pessoas com DSTs são proibidas de doar sangue."
-            );
-            input.style.display = "none";
-            setMessage(true);
+            setTextMessage([
+              ...TextMessage,
+              "Pessoas com DSTs (Doenças Sexualmente Transmissíveis) são consideradas de risco para a transmissão dessas doenças por meio da doação de sangue. Por esse motivo, em muitos países, incluindo o Brasil, pessoas com DSTs são proibidas de doar sangue.",
+            ]);
             setTimeout(() => {
               const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
               element.scrollIntoView({
@@ -452,7 +406,6 @@ const App = () => {
             }, 1000);
           } else {
             setMessage(false);
-            input.style.display = "block";
           }
         }
       });
@@ -462,10 +415,7 @@ const App = () => {
     const input = document.getElementById("input1");
     if (idade < 16) {
       setTitle("Impedimento Definitivo");
-      setTypemessage("Idade insuficiente para doação");
-      setquestionario(false);
-      setMessage(true);
-      input.style.display = "none";
+      setTextMessage([...TextMessage, "Idade insuficiente para doação"]);
       setTimeout(() => {
         const element = document.getElementById("MES"); // substitua "myElement" pelo ID do elemento que você deseja rolar
         element.scrollIntoView({
@@ -813,8 +763,14 @@ const App = () => {
   }
   function showData(event) {
     event.preventDefault();
-    setquestionario(false);
-    setcalendario(true);
+    if (title === "Impedimento Definitivo") {
+      setMessage(true);
+      setcalendario(false);
+      setquestionario(false);
+    } else {
+      setquestionario(false);
+      setcalendario(true);
+    }
   }
 
   function formCheck() {
@@ -826,6 +782,18 @@ const App = () => {
     setdata(false);
     setDoardor(true);
     Buttons();
+  }
+
+  function stateCheck() {
+    const select = document.getElementById("selectState");
+    const opt = select.options[select.selectedIndex].value;
+    if (opt === "none") {
+      setState(true);
+      setgenero(false);
+    } else {
+      setState(false);
+      setgenero(true);
+    }
   }
 
   return (
@@ -850,6 +818,50 @@ const App = () => {
                   Prosseguir
                 </button>
               </div>
+            </div>
+          )}
+          {state && (
+            <div className="text-center">
+              <h5>Informe seu Estado</h5>
+              <select name="" id="selectState" className="form-control">
+                <option value="none" selected>
+                  Estado
+                </option>
+                <option value="">AC</option>
+                <option value="">AL</option>
+                <option value="">AP</option>
+                <option value="">AM</option>
+                <option value="">BA</option>
+                <option value="">CE</option>
+                <option value="">DF</option>
+                <option value="">ES</option>
+                <option value="">GO</option>
+                <option value="">MA</option>
+                <option value="">MT</option>
+                <option value="">MS</option>
+                <option value="">MG</option>
+                <option value="">PA</option>
+                <option value="">PB</option>
+                <option value="">PR</option>
+                <option value="">PE</option>
+                <option value="">PI</option>
+                <option value="">RJ</option>
+                <option value="">RN</option>
+                <option value="">RS</option>
+                <option value="">RO</option>
+                <option value="">RR</option>
+                <option value="">SC</option>
+                <option value="">SP</option>
+                <option value="">SE</option>
+                <option value="">TO</option>
+              </select>
+
+              <button
+                className="mt-5 mx-auto btn btn-success"
+                onClick={stateCheck}
+              >
+                Prosseguir
+              </button>
             </div>
           )}
           {doador && (
@@ -909,49 +921,45 @@ const App = () => {
             </Div4>
           )}
           {genero && (
-            <form onSubmit={generoGet}>
-              <Div5>
-                <div className="text-center">
-                  <h4>Informe seu gênero:</h4>
-                  <div>
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value={"masculino"}
-                      name="genero"
-                      required
-                    />
-                    <span>Masculino</span>
-                  </div>
-                  <div>
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value={"feminino"}
-                      name="genero"
-                      required
-                    />
-                    <span>Feminino</span>
-                  </div>
-
-                  <h4 className="mt-3">Por que isso?</h4>
+            <Div5>
+              <div className="text-center">
+                <h4>Informe seu gênero:</h4>
+                <div>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value={"masculino"}
+                    name="genero"
+                    required
+                  />
+                  <span>Masculino</span>
                 </div>
-                <span>
-                  Segundo o Ministério da Saúde do Brasil, mulher após doar
-                  sangue deve ter um descanso de 3 meses após a doação para doar
-                  novamente e homem 2 meses. <br />
-                  Caso tenha mais interece acesse o link.
-                  <a href="https://www.gov.br/saude/pt-br/composicao/saes/sangue">
-                    Doação de sangue - Ministério da Saúde
-                  </a>
-                </span>
-                <input
-                  className="btn btn-success w-100"
-                  type="submit"
-                  value={"Prosseguir"}
-                />
-              </Div5>
-            </form>
+                <div>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value={"feminino"}
+                    name="genero"
+                    required
+                  />
+                  <span>Feminino</span>
+                </div>
+
+                <h4 className="mt-3">Por que isso?</h4>
+              </div>
+              <span>
+                Segundo o Ministério da Saúde do Brasil, mulher após doar sangue
+                deve ter um descanso de 3 meses após a doação para doar
+                novamente e homem 2 meses. <br />
+                Caso tenha mais interece acesse o link.
+                <a href="https://www.gov.br/saude/pt-br/composicao/saes/sangue">
+                  Doação de sangue - Ministério da Saúde
+                </a>
+              </span>
+              <button className="btn btn-success w-100" onClick={generoGet}>
+                Prosseguir
+              </button>
+            </Div5>
           )}
           {prioridade && (
             <form required onSubmit={formCheck}>
@@ -967,8 +975,8 @@ const App = () => {
                           name="maiorIdade"
                           className="form-check-input"
                           value={"SIM"}
-                          onChange={impedido1}
                           required
+                          onChange={impedido1}
                         />
                         <span className="mr-5">SIM</span>
                         <input
@@ -1549,7 +1557,7 @@ const App = () => {
           {calendario && <Calendary data={dataFinal} />}
         </Div2>
         <div id="MES" className="d-flex justify-content-center mt-5">
-          {message && <Menssagem TextTitle={title} TextMessage={typemessage} />}
+          {message && <Menssagem TextTitle={title} TextMessage={TextMessage} />}
         </div>
       </Footer>
     </DivP>

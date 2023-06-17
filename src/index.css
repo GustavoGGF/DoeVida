@@ -24,3 +24,14 @@ input[type="number"]::-webkit-outer-spin-button {
 input {
   position: relative !important;
 }
+
+.bdbottom {
+  border-bottom: 2px solid gray;
+}
+
+#div3 {
+  user-select: none;
+}
+.non {
+  user-select: none;
+}
